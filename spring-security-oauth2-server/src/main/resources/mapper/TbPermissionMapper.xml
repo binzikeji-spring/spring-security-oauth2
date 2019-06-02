@@ -16,4 +16,19 @@
     <!--@mbg.generated generated on Wed May 29 00:14:43 CST 2019.-->
     id, parent_id, `name`, enname, url, description, created, updated
   </sql>
+    <select id="selectByUserId" resultMap="BaseResultMap">
+      SELECT
+        p.*
+      FROM
+        tb_user AS u
+        LEFT JOIN tb_user_role AS ur
+          ON u.id = ur.user_id
+        LEFT JOIN tb_role AS r
+          ON ur.role_id = r.id
+        LEFT JOIN tb_role_permission AS rp
+          ON r.id = rp.role_id
+        LEFT JOIN tb_permission AS p
+          ON rp.permission_id = p.id
+      WHERE u.id = #{userId}
+    </select>
 </mapper>
